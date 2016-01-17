@@ -294,6 +294,7 @@ void ofSetOrientation(ofOrientation orientation, bool vFlip){
 
 //--------------------------------------
 ofOrientation ofGetOrientation(){
+	//return OF_ORIENTATION_90_RIGHT;
 	return mainLoop()->getCurrentWindow()->getOrientation();
 }
 

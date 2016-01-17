@@ -23,10 +23,15 @@ typedef enum {
 
 - (void) startRender;
 - (void) finishRender;
+- (void) destroyFramebuffer;
+
 - (BOOL)resizeFromLayer:(CAEAGLLayer *)layer;
 - (EAGLContext*) context;
 
 - (NSInteger)getWidth;
 - (NSInteger)getHeight;
+- (int)getFrameBufferID;
+- (BOOL)createFramebuffer:(CAEAGLLayer *)layer;
+
 
 @end

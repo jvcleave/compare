@@ -26,10 +26,12 @@ public:
 	virtual void touchDoubleTap(int x, int y, int id) {};
 	virtual void touchCancelled(int x, int y, int id) {};
 	
-	virtual void lostFocus() {}
-	virtual void gotFocus() {}
-	virtual void gotMemoryWarning() {}
-
+	virtual void lostFocus() {};
+	virtual void gotFocus() {};
+	virtual void gotMemoryWarning() {};
+	virtual void applicationDidFinishLaunching() {};
+	virtual void applicationTerminated() {};
+	
 	virtual void touchDown(ofTouchEventArgs & touch) {
 		touchDown(touch.x, touch.y, touch.id);
 	};

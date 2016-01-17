@@ -178,10 +178,13 @@ andPreferedRenderer:(ESRendererVersion)version
 }
 
 - (void) drawView {
+	
+
     [self notifyDraw];
 }
 
 - (void)startRender {
+	
     [renderer startRender];
 }
 	
@@ -190,13 +193,15 @@ andPreferedRenderer:(ESRendererVersion)version
 }
 	
 - (void)layoutSubviews{
+	
+	//[renderer destroyFramebuffer];
     [self updateScaleFactor];
-
-    [renderer startRender];
-    [renderer resizeFromLayer:(CAEAGLLayer*)self.layer];
-    [renderer finishRender];
+    //[self startRender];
+	
+	
+    //[self finishRender];
     
-    [self notifyResized];
+	
 }
 
 //-------------------------------------------------------------------
@@ -211,7 +216,6 @@ andPreferedRenderer:(ESRendererVersion)version
     }
     
     scaleFactor = MIN(scaleFactorPref, [currentScreen scale]);
-    
     if(scaleFactor != self.contentScaleFactor) {
         self.contentScaleFactor = scaleFactor;
     }

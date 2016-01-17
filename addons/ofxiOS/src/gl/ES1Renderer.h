@@ -36,5 +36,6 @@
 
 - (NSInteger)getWidth;
 - (NSInteger)getHeight;
+- (int)getFrameBufferID;
 
 @end

@@ -128,6 +128,67 @@ bool ofxiOSExternalDisplay::mirrorOn(){
     return bMirroring;
 }
 
+
+void ofxiOSExternalDisplay::displayBlank()
+{
+	ofxiOSAppDelegate * appDelegate;
+	appDelegate = [[UIApplication sharedApplication] delegate];
+	
+	
+	if([[UIScreen screens] count] == 1){
+		return;
+	}
+	
+	UIScreen * externalScreen;
+	externalScreen = [[UIScreen screens] objectAtIndex:1];
+	
+	externalScreen.currentMode = externalScreen.preferredMode;
+	
+	NSInteger w = externalScreen.currentMode.size.width;
+	NSInteger h = externalScreen.currentMode.size.height;
+	
+	CGRect externalScreenFrame;
+	externalScreenFrame = CGRectZero;
+	externalScreenFrame.size = CGSizeMake(w, h);
+	
+	appDelegate.externalWindow = [[[UIWindow alloc] initWithFrame:externalScreenFrame] autorelease];
+	appDelegate.externalWindow.screen = externalScreen;
+	appDelegate.externalWindow.clipsToBounds = NO;
+	appDelegate.externalWindow.hidden = NO;
+	appDelegate.externalWindow.backgroundColor = [UIColor redColor];
+}
+
+void ofxiOSExternalDisplay::hideBlank()
+{
+	ofxiOSAppDelegate * appDelegate;
+	appDelegate = [[UIApplication sharedApplication] delegate];
+	
+	
+	if([[UIScreen screens] count] == 1){
+		return;
+	}
+	appDelegate.externalWindow = nil;
+	
+	return;
+	UIScreen * externalScreen;
+	externalScreen = [[UIScreen screens] objectAtIndex:1];
+	
+	externalScreen.currentMode = externalScreen.preferredMode;
+	
+	NSInteger w = externalScreen.currentMode.size.width;
+	NSInteger h = externalScreen.currentMode.size.height;
+	cout << "w: " << w << " h: " << h << endl;
+	CGRect externalScreenFrame;
+	externalScreenFrame = CGRectZero;
+	externalScreenFrame.size = CGSizeMake(w, h);
+	
+	appDelegate.externalWindow = [[[UIWindow alloc] initWithFrame:externalScreenFrame] autorelease];
+	appDelegate.externalWindow.screen = externalScreen;
+	appDelegate.externalWindow.clipsToBounds = NO;
+	appDelegate.externalWindow.hidden = YES;
+	appDelegate.externalWindow.backgroundColor = [UIColor redColor];
+}
+
 bool ofxiOSExternalDisplay::mirrorOff(){
     ofxiOSAppDelegate * appDelegate;
     appDelegate = [[UIApplication sharedApplication] delegate];

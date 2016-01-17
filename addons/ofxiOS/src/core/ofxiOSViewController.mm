@@ -136,6 +136,7 @@
 	
     if(bReadyToRotate == NO) {
         pendingInterfaceOrientation = interfaceOrientation;
+		//currentInterfaceOrientation = pendingInterfaceOrientation;
         
         // we need to update the dimensions here, so if ofSetOrientation is called in setup,
         // then it will return the correct width and height
@@ -268,7 +269,7 @@
     // This method is called from within an animation block so that any property changes you make
     // are animated at the same time as other animations that comprise the rotation.
 	// Deprecated in iOS 8. See viewWillTransitionToSize below.
-    
+	
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
 
     CGPoint center;
@@ -306,12 +307,16 @@
 //borg
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
 
+	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+
 	CGPoint center;
 	
 	center.x = size.width * 0.5;
 	center.y = size.height * 0.5;
 
-	
+	ofLogVerbose(__func__) << "center: " << center.x << " : " << center.y;
+	ofLogVerbose(__func__) << "size: " << size.width << " : " << size.height;
+
 	if(bAnimated) {
 		NSTimeInterval duration = 0.3;
 		[self.glView.layer removeAllAnimations];
@@ -330,6 +335,7 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
 
+	NSLog(@"didRotateFromInterfaceOrientation");
     // CALLBACK 4.
     // This action marks the end of the rotation process.
     // You can use this method to show views, change the layout of views, or make other changes to your app.

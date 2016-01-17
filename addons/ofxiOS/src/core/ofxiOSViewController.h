@@ -4,6 +4,7 @@
 //
 
 #pragma once
+#include "ofMain.h"
 
 #import <UIKit/UIKit.h>
 

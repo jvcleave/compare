@@ -42,6 +42,8 @@ public:
 	virtual void lostFocus(){};
 	virtual void gotFocus(){};
 	virtual void gotMemoryWarning(){};
+	virtual void applicationDidFinishLaunching(){};
+	virtual void applicationTerminated(){};
     virtual void deviceOrientationChanged(int newOrientation){};
 	virtual void launchedWithURL(std::string url){};
 };

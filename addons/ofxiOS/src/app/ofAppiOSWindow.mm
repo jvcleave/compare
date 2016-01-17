@@ -226,12 +226,15 @@ void ofAppiOSWindow::setOrientation(ofOrientation toOrientation) {
     }
     ofxiOSViewController * glViewController = ((ofxiOSAppDelegate *)appDelegate).glViewController;
     ofxiOSEAGLView * glView = glViewController.glView;
-    
-    if(settings.enableHardwareOrientation == true) {
+	
+	
+    if(settings.enableHardwareOrientation == true)
+	{
         [glViewController rotateToInterfaceOrientation:interfaceOrientation animated:settings.enableHardwareOrientationAnimation];
     } else {
         [[UIApplication sharedApplication] setStatusBarOrientation:interfaceOrientation animated:settings.enableHardwareOrientationAnimation];
-        if(bResized == true) {
+        if(bResized == true)
+		{
             [glView layoutSubviews]; // calling layoutSubviews so window resize notification is fired.
         }
     }

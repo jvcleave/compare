@@ -31,6 +31,8 @@ public:
     static bool displayOnDeviceScreen();
     static bool mirrorOn();
     static bool mirrorOff();
+	static void displayBlank();
+	static void hideBlank();
 
     //-------------------------------------------------------
     static bool isDisplayingOnExternalScreen();

@@ -69,11 +69,12 @@
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     
     NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
-    
+    /*
     [center addObserver:self
                selector:@selector(receivedRotate:)
                    name:UIDeviceOrientationDidChangeNotification
                  object:nil];
+	 */
     
     [center addObserver:self
                selector:@selector(handleScreenConnectNotification:)
@@ -154,7 +155,7 @@
 		}
 		
         if(!bDoesHWOrientation) {
-            [self.glViewController rotateToInterfaceOrientation:UIInterfaceOrientationPortrait animated:false];
+			[self.glViewController rotateToInterfaceOrientation:interfaceOrientation animated:false];
 		} else {
             [[UIApplication sharedApplication] setStatusBarOrientation:interfaceOrientation animated:NO];
             [self.glViewController rotateToInterfaceOrientation:interfaceOrientation animated:false];
@@ -162,6 +163,7 @@
         }
         
     }
+	ofxiOSAlerts.applicationDidFinishLaunching();
 }
 
 //------------------------------------------------------------------------------------------- application delegate callbacks.
@@ -180,6 +182,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     [ofxiOSGetGLView() stopAnimation];
 	
+	ofxiOSAlerts.applicationTerminated();
     // stop listening for orientation change notifications
     [[NSNotificationCenter defaultCenter] removeObserver: self];
     [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];

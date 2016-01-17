@@ -63,6 +63,23 @@ public:
 		}
 	}
 	
+	void applicationTerminated()
+	{
+		for(std::list<ofxiOSAlertsListener*>::iterator it=listeners.begin(); it!=listeners.end(); ++it) {
+			ofxiOSAlertsListener* o = *it;
+			o->applicationTerminated();
+		}
+	}
+	
+	void applicationDidFinishLaunching()
+	{
+		for(std::list<ofxiOSAlertsListener*>::iterator it=listeners.begin(); it!=listeners.end(); ++it) {
+			ofxiOSAlertsListener* o = *it;
+			o->applicationDidFinishLaunching();
+		}
+	}
+	
+	
 	//alerts engine will call this when the program receives a memory warning 
 	void gotMemoryWarning()
 	{

@@ -84,14 +84,38 @@
     }
 }
 
-- (BOOL)resizeFromLayer:(CAEAGLLayer *)layer {	
-    [self destroyFramebuffer];
-    BOOL bOk = [self createFramebuffer:layer];
-    bResize = true;
-    return bOk;
+- (BOOL)resizeFromLayer:(CAEAGLLayer *)layer
+{
+	
+    //[self destroyFramebuffer];
+	BOOL bOk = NO;
+	if(defaultFramebuffer == 0)
+	{
+		bOk = [self createFramebuffer:layer];
+		bResize = true;
+		
+	}
+	return bOk;
+}
+- (int)getFrameBufferID
+{
+	return (int)defaultFramebuffer;
 }
 
 - (BOOL)createFramebuffer:(CAEAGLLayer *)layer {
+	if(defaultFramebuffer != 0)
+	{
+		return YES;
+
+	}else
+	{
+		NSLog(@"dfasdfa");
+	}
+	if(!context)
+	{
+		return NO;
+
+	}
 	glGenFramebuffersOES(1, &defaultFramebuffer);
 	glGenRenderbuffersOES(1, &colorRenderbuffer);
 	
@@ -106,9 +130,21 @@
         glGenRenderbuffersOES(1, &fsaaColorRenderBuffer);
     }
 	
+	
 	glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth);
 	glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight);
 	
+	NSLog(@"backingWidth %d, backingHeight %d", backingWidth, backingHeight);
+	if(backingWidth == 0)
+	{
+		return NO;
+	}
+	GLenum err = glGetError();
+	if (err != GL_NO_ERROR)
+	{
+		NSLog(@"Error. glError: 0x%04X", err);
+
+	}
 	if(fsaaEnabled) {
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, fsaaFrameBuffer);
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, fsaaColorRenderBuffer);
@@ -131,9 +167,16 @@
 			glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, depthRenderbuffer);
 		}
 	}
-    
-	if(glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES) {
-		NSLog(@"failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
+	
+	GLenum result = glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES);
+	err = glGetError();
+	if (err != GL_NO_ERROR)
+	{
+		NSLog(@"Error. glError: 0x%04X", err);
+		
+	}
+	if(result != GL_FRAMEBUFFER_COMPLETE_OES) {
+		NSLog(@"failed to make complete framebuffer object %x", result);
 		return NO;
 	}
 	
